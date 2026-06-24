@@ -4,6 +4,7 @@ import pandas as pd
 import gdown
 import os
 import requests
+import time
 
 # ຕັ້ງຄ່າໜ້າຈໍ Dashboard
 st.set_page_config(page_title="IoT Soil & Air Quality", layout="wide")
