@@ -51,7 +51,7 @@ def get_status_info(value, metric_type):
         else: return "Good", "🟢 ຊຸ່ມຊື່ນດີ", "#2ecc71"
 
 # --- ສ່ວນດຶງຂໍ້ມູນ Real-time ຈາກ Firebase ---
-FIREBASE_URL = "ໃສ່_Database_URL_ຂອງ_Firebase_ຂອງທ່ານ_ບ່ອນນີ້/iot_data.json"
+FIREBASE_URL = "https://my-iot-project-5432f-default-rtdb.asia-southeast1.firebasedatabase.app/iot_data.json"
 
 try:
     # ດຶງຂໍ້ມູນຈາກ Firebase
