@@ -20,6 +20,10 @@ st.markdown("""
     html, body, [class*="css"], .stText, h1, h2, h3, h4, h5, h6, p, span, label {
         font-family: 'Phetsarath OT+Time New Roman','Phetsarath', 'Saysettha OT', sans-serif !important;
     }
+    /* ບັງຄັບໃຫ້ Material Icons ໃຊ້ font ຂອງມັນຕາມເດີມ */
+    .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
+    }
    </style>
     """, unsafe_allow_html=True)
 
@@ -108,6 +112,9 @@ with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
+# 💡 ປຸ່ມສະແດງເຄື່ອງໝາຍ >> (ຖ້າຢາກປ່ຽນເປັນ << ກໍປ່ຽນໃນວົງເລັບໄດ້ເລີຍ)
+if st.button("ເບິ່ງຂໍ້ມູນຖັດໄປ >>"):
+    st.write("ກຳລັງໂຫຼດຂໍ້ມູນ...")
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
 st.rerun()
