@@ -19,6 +19,10 @@ st.markdown("""
     html, body, [class*="css"], .stText, h1, h2, h3, h4, h5, h6, p, span, label {
         font-family: 'Phetsarath OT+Time New Roman','Phetsarath', 'Saysettha OT', sans-serif !important;
     }
+    /* ບັງຄັບໃຫ້ Material Icons ໃຊ້ຟອນຂອງມັນຄືເກົ່າ */
+    .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
