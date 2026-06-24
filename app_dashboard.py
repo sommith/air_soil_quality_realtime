@@ -120,7 +120,6 @@ with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
-# 💡 ປຸ່ມສະແດງເຄື່ອງໝາຍ >> (ຖ້າຢາກປ່ຽນເປັນ << ກໍປ່ຽນໃນວົງເລັບໄດ້ເລີຍ)
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
 st.rerun()
