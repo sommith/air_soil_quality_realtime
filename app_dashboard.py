@@ -81,8 +81,6 @@ except Exception as e:
     t, h, pm1, pm10, temperature, EC, pH, nitrogen, phosphorus, potassium, phw, tds = 25.0, 80.0, 11, 14, 21.0, 1.9, 5.3, 0.5, 4.6, 4.4, 5.4, 113.0
 
 # ສະແດງຄ່າປັດຈຸບັນທີ່ໄດ້ຈາກ IoT ຢູ່ Sidebar (ປ່ຽນຈາກ Slider ເປັນການໂຊຕົວເລກ)
-if st.button("ເບິ່ງຂໍ້ມູນຖັດໄປ", icon=":material/keyboard_double_arrow_right:"):
-    st.write("ກຳລັງໂຫຼດຂໍ້ມູນ...")
 st.sidebar.header("🔌 ຄ່າຈາກເຊັນເຊີ IoT (Real-time)")
 st.sidebar.metric("ອຸນຫະພູມອາກາດ (t)", f"{t} °C")
 st.sidebar.metric("ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", f"{h} %")
