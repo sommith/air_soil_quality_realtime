@@ -10,23 +10,14 @@ import time
 st.set_page_config(page_title="IoT Soil & Air Quality", layout="wide")
 st.title("🌱 ລະບົບຕິດຕາມຄຸນນະພາບດິນ ແລະ ອາກາດ Real-time (AI)")
 
-# ---ເພີ່ມ Font ພາສາລາວ (CSS) ---
+# --- ເພີ່ມ Font ພາສາລາວ (ສະບັບຕັດຕົວບັນຫາອອກເພື່ອຄວາມຊົວຣ໌) ---
 st.markdown("""
     <style>
-    /* ນຳເຂົ້າຟອນ Phetsarath ຈາກ Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Phetsarath&display=swap');
 
-    /* ປ່ຽນຟອນສະເພາະຂໍ້ຄວາມທົ່ວໄປ, ຫົວຂໍ້ ແລະ ປ້າຍຊື່ ແຕ່ຍົກເວັ້ນ Icon ທັງໝົດ */
-    h1, h2, h3, h4, h5, h6, p, span, label, li, a, .stMetric, button p {
-        font-family: 'Phetsarath OT', 'Phetsarath', 'Saysettha OT', sans-serif !important;
-    }
-    
-    /* ປ້ອງກັນບໍ່ໃຫ້ຟອນພາສາລາວໄປທັບ Icon ພື້ນຖານຂອງ Streamlit (ປຸ່ມຫຍໍ້ Sidebar, ປຸ່ມເມນູ) */
-    [data-testid="stSidebarCollapseButton"] button span, 
-    .st-emotion-cache-6q9sum, 
-    .st-emotion-cache-1p1n07z,
-    [class*="Icon"] {
-        font-family: 'root', sans-serif !important;
+    /* ປ່ຽນຟອນສະເພາະຂໍ້ຄວາມ ແລະ ຫົວຂໍ້ເທົ່ານັ້ນ (ບໍ່ໃຫ້ໄປແຕະຕ້ອງ class ຂອງລະບົບ) */
+    h1, h2, h3, h4, h5, h6, p, label, .stMetric {
+        font-family: 'Phetsarath', sans-serif !important;
     }
     </style>
     """, unsafe_allow_html=True)
