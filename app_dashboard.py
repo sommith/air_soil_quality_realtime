@@ -24,6 +24,13 @@ st.markdown("""
     .material-symbols-rounded {
         font-family: 'Material Symbols Rounded' !important;
     }
+    /* ປ້ອງກັນບໍ່ໃຫ້ຟອນພາສາລາວໄປທັບ Icon ພື້ນຖານຂອງ Streamlit (ປຸ່ມຫຍໍ້ Sidebar, ປຸ່ມເມນູ) */
+    [data-testid="stSidebarCollapseButton"] button span, 
+    .st-emotion-cache-6q9sum, 
+    .st-emotion-cache-1p1n07z,
+    [class*="Icon"] {
+        font-family: 'root', sans-serif !important;
+    }
    </style>
     """, unsafe_allow_html=True)
 
