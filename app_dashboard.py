@@ -82,6 +82,7 @@ except Exception as e:
     t, h, pm1, pm10, temperature, EC, pH, nitrogen, phosphorus, potassium, phw, tds = 25.0, 80.0, 11, 14, 21.0, 1.9, 5.3, 0.5, 4.6, 4.4, 5.4, 113.0
 
 # ສະແດງຄ່າປັດຈຸບັນທີ່ໄດ້ຈາກ IoT ຢູ່ Sidebar (ປ່ຽນຈາກ Slider ເປັນການໂຊຕົວເລກ)
+st.sidebar.title("ເມນູຄວບຄຸມ >>")
 st.sidebar.header("🔌 ຄ່າຈາກເຊັນເຊີ IoT (Real-time)")
 st.sidebar.metric("ອຸນຫະພູມອາກາດ (t)", f"{t} °C")
 st.sidebar.metric("ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", f"{h} %")
@@ -113,8 +114,6 @@ with col2:
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # 💡 ປຸ່ມສະແດງເຄື່ອງໝາຍ >> (ຖ້າຢາກປ່ຽນເປັນ << ກໍປ່ຽນໃນວົງເລັບໄດ້ເລີຍ)
-if st.button("ເບິ່ງຂໍ້ມູນຖັດໄປ >>"):
-    st.write("ກຳລັງໂຫຼດຂໍ້ມູນ...")
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
 st.rerun()
