@@ -16,14 +16,11 @@ st.markdown("""
     /* ນຳເຂົ້າຟອນ Phetsarath ຈາກ Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Phetsarath&display=swap');
 
-    /* ປ່ຽນຟອນຂອງທຸກໆຕົວອັກສອນໃນໜ້າເວັບ */
-    html, body, [class*="css"], .stText, h1, h2, h3, h4, h5, h6, p, span, label {
-        font-family: 'Phetsarath OT+Time New Roman','Phetsarath', 'Saysettha OT', sans-serif !important;
+    /* ປ່ຽນຟອນສະເພາະຂໍ້ຄວາມທົ່ວໄປ, ຫົວຂໍ້ ແລະ ປ້າຍຊື່ ແຕ່ຍົກເວັ້ນ Icon ທັງໝົດ */
+    h1, h2, h3, h4, h5, h6, p, span, label, li, a, .stMetric, button p {
+        font-family: 'Phetsarath OT', 'Phetsarath', 'Saysettha OT', sans-serif !important;
     }
-    /* ບັງຄັບໃຫ້ Material Icons ໃຊ້ font ຂອງມັນຕາມເດີມ */
-    .material-symbols-rounded {
-        font-family: 'Material Symbols Rounded' !important;
-    }
+    
     /* ປ້ອງກັນບໍ່ໃຫ້ຟອນພາສາລາວໄປທັບ Icon ພື້ນຖານຂອງ Streamlit (ປຸ່ມຫຍໍ້ Sidebar, ປຸ່ມເມນູ) */
     [data-testid="stSidebarCollapseButton"] button span, 
     .st-emotion-cache-6q9sum, 
@@ -31,7 +28,7 @@ st.markdown("""
     [class*="Icon"] {
         font-family: 'root', sans-serif !important;
     }
-   </style>
+    </style>
     """, unsafe_allow_html=True)
 
 # ໂຫລດ Model ຈາກ Google Drive (ເພີ່ມລະບົບດາວໂຫລດອັດຕະໂນມັດ)
