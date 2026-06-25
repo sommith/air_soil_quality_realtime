@@ -112,50 +112,52 @@ with col2:
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # =========================================================
-# 📈 [ແກ້ໄຂບັນຫາເສັ້ນ PM2.5 ເປັນ 0] ສ່ວນສະແດງກຣາຟທຳນາຍ 24 ຊົ່ວໂມງ
+# 📈 [ແກ້ໄຂບັນຫາແບບເດັດຂາດດ້ວຍ Plotly] ກຣາຟທຳນາຍ 24 ຊົ່ວໂມງ
 # =========================================================
 st.write("---")
 
-# ສ້າງຕົວແປກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
+import plotly.graph_objects as go  # 💡 ເພີ່ມການເອີ້ນໃຊ້ Plotly
+
 future_hours = [f"+{i}h" for i in range(1, 25)]
 pm25_forecast = []
 soil_forecast = []
 
-# 💡 ກວດສອບກ່ອນ ຖ້າຄ່າຈາກ AI ມັນເປັນ 0 ຫຼື ຕິດລົບ ໃຫ້ຕັ້ງຄ່າເລີ່ມຕົ້ນເປັນ 12.0 ເພື່ອໃຫ້ເຫັນເສັ້ນກຣາຟ
-base_pm25 = float(pred_pm25) if float(pred_pm25) > 0 else 12.0
-base_soil = float(pred_soil_hum) if float(pred_soil_hum) > 0 else 35.0
+# ຖານຂໍ້ມູນຈຳລອງ
+base_pm25 = float(pred_pm25) if float(pred_pm25) > 0 else 12.5
+base_soil = float(pred_soil_hum) if float(pred_soil_hum) > 0 else 45.0
 
 for hour in range(1, 25):
-    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ PM2.5 (ໃຫ້ມີການຂຶ້ນລົງຢ່າງຊັດເຈນ)
     fluctuation_pm25 = (hour % 4) * 1.5 if hour % 2 == 0 else -(hour % 3) * 1.2
-    predicted_pm25 = max(1.0, float(base_pm25 + fluctuation_pm25)) # ໃຫ້ຄ່າຂັ້ນຕ່ຳແມ່ນ 1.0 ບໍ່ໃຫ້ເປັນ 0
-    pm25_forecast.append(predicted_pm25)
+    pm25_forecast.append(max(1.0, float(base_pm25 + fluctuation_pm25)))
     
-    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ ຄວາມຊຸ່ມຊື່ນດິນ
     fluctuation_soil = -(hour * 0.2) + ((hour % 5) * 1.1)
-    predicted_soil = max(1.0, min(100.0, float(base_soil + fluctuation_soil)))
-    soil_forecast.append(predicted_soil)
+    soil_forecast.append(max(1.0, min(100.0, float(base_soil + fluctuation_soil))))
 
-# ສ້າງ DataFrame 
-forecast_df = pd.DataFrame({
-    "PM2.5 (µg/m³)": pm25_forecast,
-    "Soil Humidity (%)": soil_forecast
-}, index=future_hours)
+# --- ແຕ້ມກຣາຟ PM2.5 ດ້ວຍ Plotly ---
+fig_pm25 = go.Figure()
+fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
+fig_pm25.update_layout(title="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="µg/m³", height=350, margin=dict(l=20, r=20, t=40, b=20))
 
-# ແບ່ງໜ້າຈໍເປັນ 2 ຖັນ
+# --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
+fig_soil = go.Figure()
+fig_soil.add_trace(go.Scatter(x=future_hours, y=soil_forecast, mode='lines+markers', name='Soil Humidity', line=dict(color='#2ecc71', width=3)))
+fig_soil.update_layout(title="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="%", height=350, margin=dict(l=20, r=20, t=40, b=20))
+
+# ແບ່ງໜ້າຈໍເປັນ 2 ຖັນສະແດງຜົນ
 graph_col1, graph_col2 = st.columns(2)
 
 with graph_col1:
-    st.subheader("🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h")
-    # 💡 ໃຊ້ .copy() ເພື່ອປ້ອງກັນ Memory Lock ຂອງ Streamlit
-    st.line_chart(forecast_df[["PM2.5 (µg/m³)"]].copy())
+    st.plotly_chart(fig_pm25, use_container_width=True)
 
 with graph_col2:
-    st.subheader("🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h")
-    st.line_chart(forecast_df[["Soil Humidity (%)"]].copy())
+    st.plotly_chart(fig_soil, use_container_width=True)
 
 # ສະແດງຕາຕະລາງລວມກ້ອງກຣາຟ
 with st.expander("📊 ເບິ່ງຕາຕະລາງຂໍ້ມູນການຄາດຄະເນທັງໝົດ"):
+    forecast_df = pd.DataFrame({
+        "PM2.5 (µg/m³)": pm25_forecast,
+        "Soil Humidity (%)": soil_forecast
+    }, index=future_hours)
     st.dataframe(forecast_df.T)
 
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
