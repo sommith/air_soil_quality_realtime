@@ -139,14 +139,21 @@ fig_pm25 = go.Figure()
 fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
 fig_pm25.update_layout(title="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="µg/m³", height=350, margin=dict(l=20, r=20, t=40, b=20))
 
-# 💡 ແກ້ໄຂ: ເພີ່ມ font=dict(family="Phetsarath", size=14) ໄວ້ດ້ານໃນ
+# --- ແຕ້ມກຣາຟ PM2.5 ດ້ວຍ Plotly ---
+fig_pm25 = go.Figure()
+fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
+
+# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເພື່ອບັງຄັບຟອນຢູ່ຫົວຂໍ້ໂດຍກົງ
 fig_pm25.update_layout(
-    title="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", 
+    title=dict(
+        text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h",
+        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+    ),
     xaxis_title="ເວລາ", 
     yaxis_title="µg/m³", 
     height=350, 
-    margin=dict(l=20, r=20, t=40, b=20),
-    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບໃຊ້ຟອນເພັດສະລາດ
+    margin=dict(l=20, r=20, t=50, b=20),
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
 )
 
 # --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
@@ -154,14 +161,17 @@ fig_soil = go.Figure()
 fig_soil.add_trace(go.Scatter(x=future_hours, y=soil_forecast, mode='lines+markers', name='Soil Humidity', line=dict(color='#2ecc71', width=3)))
 fig_soil.update_layout(title="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="%", height=350, margin=dict(l=20, r=20, t=40, b=20))
 
-# 💡 ແກ້ໄຂ: ເພີ່ມ font=dict(family="Phetsarath", size=14) ໄວ້ດ້ານໃນເຊັၼ်ກັນ
+# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເຊັ່ນດຽວກັນ
 fig_soil.update_layout(
-    title="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", 
+    title=dict(
+        text="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h",
+        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+    ),
     xaxis_title="ເວລາ", 
     yaxis_title="%", 
     height=350, 
-    margin=dict(l=20, r=20, t=40, b=20),
-    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບໃຊ້ຟອນເພັດສະລາດ
+    margin=dict(l=20, r=20, t=50, b=20),
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
 )
 
 # ແບ່ງໜ້າຈໍເປັນ 2 ຖັນສະແດງຜົນ
