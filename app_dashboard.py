@@ -6,6 +6,7 @@ import os
 import requests
 import time
 from datetime import datetime
+import plotly.graph_objects as go
 
 # ຕັ້ງຄ່າໜ້າຈໍ Dashboard
 st.set_page_config(page_title="IoT Soil & Air Quality", layout="wide")
