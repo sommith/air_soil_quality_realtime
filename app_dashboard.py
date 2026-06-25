@@ -5,6 +5,7 @@ import gdown
 import os
 import requests
 import time
+from datetime import datetime
 
 # ຕັ້ງຄ່າໜ້າຈໍ Dashboard
 st.set_page_config(page_title="IoT Soil & Air Quality", layout="wide")
@@ -75,6 +76,12 @@ except Exception as e:
     st.error("ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບບອດ IoT ໄດ້, ກຳລັງໃຊ້ຄ່າຈຳລອງ...")
     # ຄ່າ Default ຖ້າດຶງຂໍ້ມູນບໍ່ໄດ້
     t, h, pm1, pm10, temperature, EC, pH, nitrogen, phosphorus, potassium, phw, tds = 25.0, 80.0, 11, 14, 21.0, 1.9, 5.3, 0.5, 4.6, 4.4, 5.4, 113.0
+
+
+# ສະແດງວັນທີຢູ່ Sidebar
+now = datetime.now()
+st.sidebar.markdown(f"📅 **ວັນທີ:** {now.strftime('%d/%m/%Y')} | 🕒 **ເວລາ:** {now.strftime('%H:%M:%S')}")
+st.sidebar.write("---")
 
 # ສະແດງຄ່າປັດຈຸບັນທີ່ໄດ້ຈາກ IoT ຢູ່ Sidebar (ປ່ຽນຈາກ Slider ເປັນການໂຊຕົວເລກ)
 st.sidebar.header("🔌 ຄ່າຈາກເຊັນເຊີ IoT (Real-time)")
