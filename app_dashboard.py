@@ -112,12 +112,12 @@ with col2:
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # =========================================================
-# 📈 ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ແລະ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24 ຊົ່ວໂມງ 
+# 📈 [ແກ້ໄຂຄັ້ງສຸດທ້າຍ] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ແລະ ຄວາມຊຸ່ມຊື່ນດິນ
 # =========================================================
 st.write("---")
 
-# ສ້າງຕົວປ່ຽນກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
-future_hours = [i for i in range(1, 25)]
+# ສ້າງຕົວແປກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
+future_hours = [f"+{i}h" for i in range(1, 25)] # ປ່ຽນຮູບແບບໃຫ້ເປັນຂໍ້ຄວາມອ່ານງ່າຍ (+1h, +2h)
 pm25_forecast = []
 soil_forecast = []
 
@@ -127,35 +127,33 @@ for hour in range(1, 25):
     predicted_pm25 = max(0.0, float(pred_pm25 + fluctuation_pm25))
     pm25_forecast.append(predicted_pm25)
     
-    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ ຄວາມຊຸ່ມຊື່ນດິນ (Soil Humidity)
-    # ຈຳລອງໃຫ້ດິນຄ່ອຍໆແຫ້ງລົງເລັກນ້ອຍຕາມເວລາ ຖ້າບໍ່ມີການຫົດນ້ຳ
+    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ ຄວາມຊຸ່ມຊື່ນດິນ
     fluctuation_soil = -(hour * 0.1) + ((hour % 4) * 0.2)
     predicted_soil = max(0.0, min(100.0, float(pred_soil_hum + fluctuation_soil)))
     soil_forecast.append(predicted_soil)
 
-# ສ້າງ DataFrame ລວມຂໍ້ມູນທັງສອງ
+# ສ້າງ DataFrame ໂດຍການເອົາ Hour ໄປເປັນ Index ເລີຍ (ວິທີນີ້ Streamlit ຈະແຕ້ມເສັ້ນໃຫ້ທັນທີ)
 forecast_df = pd.DataFrame({
-    "Hour": future_hours,
-    "PM2.5": pm25_forecast,
-    "Soil_Humidity": soil_forecast
-})
+    "PM2.5 (µg/m³)": pm25_forecast,
+    "Soil Humidity (%)": soil_forecast
+}, index=future_hours)
 
-# ແບ່ງໜ້າຈໍເປັນ 2 ຖັນ (Columns) ເພື່ອສະແດງ 2 ກຣາຟຂ້າງກັນໃຫ້ສວຍງາມ
+# ແບ່ງໜ້າຈໍເປັນ 2 ຖັນ (Columns) ເພື່ອສະແດງ 2 ກຣາຟຂ້າງກັນ
 graph_col1, graph_col2 = st.columns(2)
 
 with graph_col1:
     st.subheader("🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h")
-    st.line_chart(forecast_df, x="Hour", y="PM2.5")
+    # ສົ່ງຂໍ້ມູນສະເພາະຖັນ PM2.5 ໃຫ້ກຣາຟ (ມັນຈະດຶງ Index ໄປເປັນແກນ X ອັດຕະໂນມັດ)
+    st.line_chart(forecast_df[["PM2.5 (µg/m³)"]])
 
 with graph_col2:
     st.subheader("🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h")
-    st.line_chart(forecast_df, x="Hour", y="Soil_Humidity")
+    # ສົ່ງຂໍ້ມູນສະເພາະຖັນ Soil Humidity ໃຫ້ກຣາຟ
+    st.line_chart(forecast_df[["Soil Humidity (%)"]])
 
-# ສະແດງຕາຕະລາງລວມກ້ອງກຣາຟ
+# ສະແດງຕາຕະລາງລວມກ້ອງกຣາຟ
 with st.expander("📊 ເບິ່ງຕາຕະລາງຂໍ້ມູນການຄາດຄະເນທັງໝົດ"):
-    table_df = forecast_df.copy()
-    table_df.columns = ["Hour", "PM2.5 (µg/m³)", "Soil Humidity (%)"]
-    st.dataframe(table_df.set_index("Hour").T)
+    st.dataframe(forecast_df.T)
 
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
