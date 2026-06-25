@@ -112,31 +112,35 @@ with col2:
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # =========================================================
-# 📈 [ແກ້ໄຂ] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ 
+# 📈 [ແກ້ໄຂໃໝ່] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ 
 # =========================================================
 st.write("---")
 st.subheader("🔮 ການຄາດຄະເນຄ່າ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ (AI Forecast)")
 
-future_hours = [i for i in range(1, 25)] # ປ່ຽນເປັນຕົວເລກ 1-24 ເພື່ອໃຫ້ແຕ້ມແກນ X ໄດ້ງ່າຍ
+future_hours = [i for i in range(1, 25)]
 pm25_forecast = []
 
 for hour in range(1, 25):
+    # ຄຳນວນຄ່າຄວາມຜັນຜວນ
     fluctuation = (hour % 6) * 0.4 if hour % 2 == 0 else -(hour % 4) * 0.3
-    predicted_value = max(0, pred_pm25 + fluctuation)
+    predicted_value = max(0.0, float(pred_pm25 + fluctuation)) # ບັງຄັບໃຫ້ເປັນ float
     pm25_forecast.append(predicted_value)
 
-# ສ້າງ DataFrame ໂດຍເກັບ Hour ເປັນຖັນທຳດາ (ບໍ່ຕ້ອງເຮັດເປັນ Index)
+# ສ້າງ DataFrame ໂດຍກຳນົດຊື່ຖັນໃຫ້ຊັດເຈນ
 forecast_df = pd.DataFrame({
     "Hour": future_hours,
-    "PM2.5": pm25_forecast
+    "PM25_Value": pm25_forecast  # ປ່ຽນຊື່ຖັນໃຫ້ເປັນຕົວອັກສອນລ້ວນ ເພື່ອບໍ່ໃຫ້ລະບົບເອີຣີ
 })
 
-# 💡 ບອກ Streamlit ໃຫ້ແຈ້ງວ່າ ແກນ X ແມ່ນ Hour ແລະ ແກນ Y ແມ່ນ PM2.5
-st.line_chart(forecast_df, x="Hour", y="PM2.5")
+# 💡 ແຕ້ມກຣາຟເສັ້ນໂດຍກຳນົດແກນ X ແລະ Y ໃຫ້ຖືກຕ້ອງກັບ DataFrame
+st.line_chart(forecast_df, x="Hour", y="PM25_Value")
 
-# ສະແດງຕາຕະລາງກ້ອງກຣາຟ (ປ່ຽນໃຫ້ອ່ານງ່າຍຂຶ້ນ)
+# ສະແດງຕາຕະລາງກ້ອງກຣາຟ
 with st.expander("📊 ເບິ່ງຕາຕະລາງຄ່າ PM2.5 ແຕ່ລະຊົ່ວໂມງ"):
-    st.dataframe(forecast_df.set_index("Hour").T)
+    # ປ່ຽນຊື່ສະແດງຜົນໃນຕາຕະລາງໃຫ້ງາມຂຶ້ນ
+    table_df = forecast_df.copy()
+    table_df.columns = ["Hour", "PM2.5"]
+    st.dataframe(table_df.set_index("Hour").T)
 
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
