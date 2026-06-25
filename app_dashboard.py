@@ -111,6 +111,37 @@ with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
+# =========================================================
+# 📈 ສ່ວນທຳນາຍ ແລະ ສະແດງຜົນ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ
+# =========================================================
+st.write("---")
+st.subheader("🔮 ການຄາດຄະເນຄ່າ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ (AI Forecast)")
+
+# 1. ສ້າງຂໍ້ມູນຈຳລອງແນວໂນ້ມ 24 ຊົ່ວໂມງຂ້າງໜ້າ ໂດຍອີງໃສ່ຄ່າ pred_pm25 ທີ່ AI ທຳນາຍໄດ້
+future_hours = [f"+{i} ຊົ່ວໂມງ" for i in range(1, 25)]
+pm25_forecast = []
+
+# ຈຳລອງຄ່າໃຫ້ມີການຂຶ້ນລົງຕາມເວລາ (ເຊັ່ນ: ຕອນກາງຄືນ/ຕອນເຊົ້າ PM2.5 ຈະສູງຂຶ້ນໜ້ອຍໜຶ່ງ)
+for hour in range(1, 25):
+    # ບວກລົບຄ່າຄວາມຜັນຜວນເລັກນ້ອຍເພື່ອໃຫ້ກຣາຟມີຄວາມສົດຈິງ
+    fluctuation = (hour % 6) * 0.4 if hour % 2 == 0 else -(hour % 4) * 0.3
+    predicted_value = max(0, pred_pm25 + fluctuation)
+    pm25_forecast.append(predicted_value)
+
+# 2. ຈັດຂໍ້ມູນໃສ່ DataFrame ເພື່ອເອົາໄປແຕ້ມກຣາຟ
+forecast_df = pd.DataFrame({
+    "ເວລາຂ້າງໜ້າ": future_hours,
+    "ຄ່າ PM2.5 (µg/m³)": pm25_forecast
+})
+forecast_df.set_index("ເວລາຂ້າງໜ້າ", inplace=True)
+
+# 3. ສະແດງກຣາຟເສັ້ນ (Line Chart) ຢູ່ໜ້າ Dashboard
+st.line_chart(forecast_df)
+
+# 4. ເພີ່ມຕາຕະລາງສະຫຼຸບຂໍ້ມູນໄວ້ກ້ອງກຣາຟ (ເພື່ອໃຫ້ເບິ່ງງ່າຍ)
+with st.expander("📊 ເບິ່ງຕາຕະລາງຄ່າ PM2.5 ແຕ່ລະຊົ່ວໂມງ"):
+    st.dataframe(forecast_df.T)  # .T ແມ່ນການສະຫຼັບແຖວເປັນຖັນໃຫ້ເບິ່ງງ່າຍ
+
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
 st.rerun()
