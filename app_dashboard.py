@@ -110,30 +110,33 @@ with col1:
 with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
+
 # =========================================================
-# 📈 [ເພີ່ມ] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ 
+# 📈 [ແກ້ໄຂ] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ 
 # =========================================================
 st.write("---")
 st.subheader("🔮 ການຄາດຄະເນຄ່າ PM2.5 ລ່ວງໜ້າ 24 ຊົ່ວໂມງ (AI Forecast)")
 
-future_hours = [f"+{i}h" for i in range(1, 25)]
+future_hours = [i for i in range(1, 25)] # ປ່ຽນເປັນຕົວເລກ 1-24 ເພື່ອໃຫ້ແຕ້ມແກນ X ໄດ້ງ່າຍ
 pm25_forecast = []
 
 for hour in range(1, 25):
     fluctuation = (hour % 6) * 0.4 if hour % 2 == 0 else -(hour % 4) * 0.3
     predicted_value = max(0, pred_pm25 + fluctuation)
     pm25_forecast.append(predicted_value)
+
+# ສ້າງ DataFrame ໂດຍເກັບ Hour ເປັນຖັນທຳດາ (ບໍ່ຕ້ອງເຮັດເປັນ Index)
 forecast_df = pd.DataFrame({
     "Hour": future_hours,
-    "PM2.5 (µg/m³)": pm25_forecast
+    "PM2.5": pm25_forecast
 })
-forecast_df.set_index("Hour", inplace=True)
-# ສະແດງກຣາຟເສັ້ນ
-st.line_chart(forecast_df)
 
-# ສະແດງຕາຕະລາງກ້ອງກຣາຟ
+# 💡 ບອກ Streamlit ໃຫ້ແຈ້ງວ່າ ແກນ X ແມ່ນ Hour ແລະ ແກນ Y ແມ່ນ PM2.5
+st.line_chart(forecast_df, x="Hour", y="PM2.5")
+
+# ສະແດງຕາຕະລາງກ້ອງກຣາຟ (ປ່ຽນໃຫ້ອ່ານງ່າຍຂຶ້ນ)
 with st.expander("📊 ເບິ່ງຕາຕະລາງຄ່າ PM2.5 ແຕ່ລະຊົ່ວໂມງ"):
-    st.dataframe(forecast_df.T)
+    st.dataframe(forecast_df.set_index("Hour").T)
 
 # 💡 ເພີ່ມລະບົບ Auto-Refresh ເພື່ອໃຫ້ໜ້າເວັບໂຫຼດຂໍ້ມູນໃໝ່ທຸກໆ 10 ວິນາທີ
 time.sleep(10)
