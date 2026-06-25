@@ -178,10 +178,10 @@ fig_soil.update_layout(
 graph_col1, graph_col2 = st.columns(2)
 
 with graph_col1:
-    st.plotly_chart(fig_pm25, use_container_width=True)
+    st.plotly_chart(fig_pm25, use_container_width=True, config={"displayModeBar": False})
 
 with graph_col2:
-    st.plotly_chart(fig_soil, use_container_width=True)
+    st.plotly_chart(fig_soil, use_container_width=True, config={"displayModeBar": False})
 
 # ສະແດງຕາຕະລາງລວມກ້ອງກຣາຟ
 with st.expander("📊 ເບິ່ງຕາຕະລາງຂໍ້ມູນການຄາດຄະເນທັງໝົດ"):
