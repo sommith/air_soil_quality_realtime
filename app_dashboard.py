@@ -11,10 +11,14 @@ import plotly.graph_objects as go
 # ຕັ້ງຄ່າໜ້າຈໍ Dashboard
 st.set_page_config(page_title="IoT Soil & Air Quality", layout="wide")
 st.title("🌱 ລະບົບຕິດຕາມຄຸນນະພາບດິນ ແລະ ອາກາດ Real-time (AI)")
-# ສະແດງວັນທີຢູ່ Sidebar
+# 📅 ດຶງວັນທີ ແລະ ເວລາປັດຈຸບັນ
 now = datetime.now()
-st.sidebar.markdown(f"📅 **ວັນທີ:** {now.strftime('%d/%m/%Y')} | 🕒 **ເວລາ:** {now.strftime('%H:%M:%S')}")
-st.sidebar.write("---")
+current_date = now.strftime("%d/%m/%Y") # ຮູບແບບ ວັນ/ເດືອນ/ປີ
+current_time = now.strftime("%H:%M:%S") # ຮູບແບບ ຊົ່ວໂມງ:ນາທີ:ວິນາທີ
+
+# 💻 ສະແດງຜົນອອກໜ້າຈໍ
+st.markdown(f"📆 **ວັນທີປັດຈຸບັນ:** {current_date} | 🕒 **ອັບເດດລ່າສຸດ:** {current_time}")
+st.write("---") # ຂີດເສັ້ນຊື່ຂັ້ນແບ່ງສ່ວນ
 
 # --- ເພີ່ມ Font ພາສາລາວ (ສະບັບຕັດຕົວບັນຫາອອກເພື່ອຄວາມຊົວຣ໌) ---
 st.markdown("""
