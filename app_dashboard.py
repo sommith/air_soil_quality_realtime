@@ -17,7 +17,7 @@ current_date = now.strftime("%d/%m/%Y") # ຮູບແບບ ວັນ/ເດື
 current_time = now.strftime("%H:%M:%S") # ຮູບແບບ ຊົ່ວໂມງ:ນາທີ:ວິນາທີ
 
 # 💻 ສະແດງຜົນອອກໜ້າຈໍ
-st.markdown(f"📆 **ວັນທີປັດຈຸບັນ:** {current_date} | 🕒 **ອັບເດດລ່າສຸດ:** {current_time}")
+st.markdown(f"📆 **ວັນທີ:** {current_date} | 🕒 **ອັບເດດລ່າສຸດ:** {current_time}")
 st.write("---") # ຂີດເສັ້ນຊື່ຂັ້ນແບ່ງສ່ວນ
 
 # --- ເພີ່ມ Font ພາສາລາວ (ສະບັບຕັດຕົວບັນຫາອອກເພື່ອຄວາມຊົວຣ໌) ---
