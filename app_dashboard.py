@@ -139,10 +139,30 @@ fig_pm25 = go.Figure()
 fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
 fig_pm25.update_layout(title="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="µg/m³", height=350, margin=dict(l=20, r=20, t=40, b=20))
 
+# 💡 ແກ້ໄຂ: ເພີ່ມ font=dict(family="Phetsarath", size=14) ໄວ້ດ້ານໃນ
+fig_pm25.update_layout(
+    title="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", 
+    xaxis_title="ເວລາ", 
+    yaxis_title="µg/m³", 
+    height=350, 
+    margin=dict(l=20, r=20, t=40, b=20),
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບໃຊ້ຟອນເພັດສະລາດ
+)
+
 # --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
 fig_soil = go.Figure()
 fig_soil.add_trace(go.Scatter(x=future_hours, y=soil_forecast, mode='lines+markers', name='Soil Humidity', line=dict(color='#2ecc71', width=3)))
 fig_soil.update_layout(title="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", xaxis_title="ເວລາ", yaxis_title="%", height=350, margin=dict(l=20, r=20, t=40, b=20))
+
+# 💡 ແກ້ໄຂ: ເພີ່ມ font=dict(family="Phetsarath", size=14) ໄວ້ດ້ານໃນເຊັၼ်ກັນ
+fig_soil.update_layout(
+    title="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", 
+    xaxis_title="ເວລາ", 
+    yaxis_title="%", 
+    height=350, 
+    margin=dict(l=20, r=20, t=40, b=20),
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບໃຊ້ຟອນເພັດສະລາດ
+)
 
 # ແບ່ງໜ້າຈໍເປັນ 2 ຖັນສະແດງຜົນ
 graph_col1, graph_col2 = st.columns(2)
