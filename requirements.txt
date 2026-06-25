@@ -1,5 +1,6 @@
 streamlit
 joblib
 pandas
-scikit-learn
 gdown
+requests
+plotly
