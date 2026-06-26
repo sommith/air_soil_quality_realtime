@@ -4,3 +4,4 @@ pandas
 gdown
 requests
 plotly
+scikit-learn
