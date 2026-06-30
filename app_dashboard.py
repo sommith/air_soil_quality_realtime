@@ -17,7 +17,7 @@ now = datetime.now()
 current_date = now.strftime("%d/%m/%Y") # ຮູບແບບ ວັນ/ເດືອນ/ປີ
 current_time = now.strftime("%H:%M:%S") # ຮູບແບບ ຊົ່ວໂມງ:ນາທີ:ວິນາທີ
 
-# 💻 ສະແດງຜົນອອກໜ້າຈໍ
+# 💻 ສະແດງຜົນອອກໜ້າຈໍຫຼັກ
 st.markdown(f"📆 **ວັນທີ:** {current_date} | 🕒 **ອັບເດດລ່າສຸດ:** {current_time}")
 st.write("---") # ຂີດເສັ້ນຊື່ຂັ້ນແບ່ງສ່ວນ
 
@@ -55,7 +55,7 @@ def get_status_info(value, metric_type):
     elif metric_type == "soil":
         if value < 20: return "Poor", "🔴 ແຫ້ງແລ້ງເກີນໄປ", "#e74c3c"
         elif value <= 40: return "Moderate", "🟡 ປານກາງ", "#f1c40f"
-        else: return "Good", "🟢 ชุ่มชื้นดี", "#2ecc71"
+        else: return "Good", "🟢 ຊຸ່ມຊື່ນດີ", "#2ecc71"
 
 # --- ສ່ວນດຶງຂໍ້ມູນ Real-time ຈາກ Firebase ---
 FIREBASE_URL = "https://my-iot-project-5432f-default-rtdb.asia-southeast1.firebasedatabase.app/iot_data.json"
@@ -69,9 +69,9 @@ try:
     h = response.get('h', 80.0)
     pm1 = response.get('pm1', 11.0)
     pm10 = response.get('pm10', 14.0)
-    temperature = response.get('temperature', t) # ໃຊ້ຄ່າ t ແທນຖ້າບໍ່ມີ
-    EC = response.get('EC', response.get('ec', 1.9)) # ຮອງຮັບທັງ EC ແລະ ec
-    pH = response.get('pH', response.get('ph', 5.3)) # ຮອງຮັບທັງ pH ແລະ ph
+    temperature = response.get('temperature', t) 
+    EC = response.get('EC', response.get('ec', 1.9)) 
+    pH = response.get('pH', response.get('ph', 5.3)) 
     nitrogen = response.get('nitrogen', 0.5)
     phosphorus = response.get('phosphorus', 4.6)
     potassium = response.get('potassium', 4.4)
@@ -80,63 +80,43 @@ try:
 
 except Exception as e:
     st.error("ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບບອດ IoT ໄດ້, ກຳລັງໃຊ້ຄ່າຈຳລອງ...")
-    # ຄ່າ Default ຖ້າດຶງຂໍ້ມູນບໍ່ໄດ້
     t, h, pm1, pm10, temperature, EC, pH, nitrogen, phosphorus, potassium, phw, tds = 25.0, 80.0, 11.0, 14.0, 21.0, 1.9, 5.3, 0.5, 4.6, 4.4, 5.4, 113.0
 
 # =========================================================
-# 📊 ສ່ວນສະແດງຜົນຄ່າວັດແທກທັງໝົດ 12 ຕົວແປ ເທິງໜ້າ Dashboard
+# 📊 ຍ້າຍຄ່າວັດແທກທັງໝົດໄປໄວ້ຢູ່ແຖບດ້ານຊ້າຍ (Sidebar)
 # =========================================================
-st.subheader("🔌 ຄ່າວັດແທກທັງໝົດຈາກອຸປະກອນ IoT (Real-time)")
+st.sidebar.header("🔌 ຄ່າຈາກເຊັນເຊີ IoT (Real-time)")
 
 # 🌤️ ກຸ່ມທີ 1: ສະພາບອາກາດ
-st.markdown("### 🌤️ ສະພາບອາກາດ")
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    st.metric(label="ອຸນຫະພູມ (t)", value=f"{t} °C")
-with col2:
-    st.metric(label="ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", value=f"{h} %")
-with col3:
-    st.metric(label="ຝຸ່ນ PM1", value=f"{pm1} µg/m³")
-with col4:
-    st.metric(label="ຝຸ່ນ PM10", value=f"{pm10} µg/m³")
+st.sidebar.markdown("### 🌤️ ສະພາບອາກາດ")
+st.sidebar.metric(label="ອຸນຫະພູມ (t)", value=f"{t} °C")
+st.sidebar.metric(label="ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", value=f"{h} %")
+st.sidebar.metric(label="ຝຸ່ນ PM1", value=f"{pm1} µg/m³")
+st.sidebar.metric(label="ຝຸ່ນ PM10", value=f"{pm10} µg/m³")
 
-st.markdown("---")
+st.sidebar.markdown("---")
 
 # 🧫 ກຸ່ມທີ 2: ຄຸນສົມບັດດິນ ແລະ ນ້ຳ
-st.markdown("### 🪵 ຄຸນສົມບັດດິນ ແລະ ນ້ຳ")
-col5, col6, col7, col8 = st.columns(4)
-with col5:
-    st.metric(label="ຄ່າ pH ໃນດິນ", value=f"{pH}")
-with col6:
-    st.metric(label="ຄ່າ EC ໃນດິນ", value=f"{EC} mS/cm")
-with col7:
-    st.metric(label="ຄ່າ TDS (ສານລະລາຍ)", value=f"{tds} ppm")
-with col8:
-    st.metric(label="ຄ່າ pHw (ນ້ຳ)", value=f"{phw}")
+st.sidebar.markdown("### 🪵 ຄຸນສົມບັດດິນ ແລະ ນ້ຳ")
+st.sidebar.metric(label="ຄ່າ pH ໃນດິນ", value=f"{pH}")
+st.sidebar.metric(label="ຄ່າ EC ໃນດິນ", value=f"{EC} mS/cm")
+st.sidebar.metric(label="ຄ່າ TDS (ສານລະລາຍ)", value=f"{tds} ppm")
+st.sidebar.metric(label="ຄ່າ pHw (ນ້ຳ)", value=f"{phw}")
 
-st.markdown("---")
+st.sidebar.markdown("---")
 
 # 🧪 ກຸ່ມທີ 3: ສານອາຫານຫຼັກໃນດິນ (NPK)
-st.markdown("### 🧪 ສານອາຫານຫຼັກໃນດິນ (NPK)")
-col9, col10, col11 = st.columns(3)
-with col9:
-    st.metric(label="ໄນໂຕຣເຈນ (N)", value=f"{nitrogen} mg/kg")
-with col10:
-    st.metric(label="ຟົດສະຟໍຣັດ (P)", value=f"{phosphorus} mg/kg")
-with col11:
-    st.metric(label="ໂພແທດຊຽມ (K)", value=f"{potassium} mg/kg")
+st.sidebar.markdown("### 🧪 ສານອາຫານໃນດິນ (NPK)")
+st.sidebar.metric(label="ໄນໂຕຣເຈນ (N)", value=f"{nitrogen} mg/kg")
+st.sidebar.metric(label="ຟົດສະຟໍຣັດ (P)", value=f"{phosphorus} mg/kg")
+st.sidebar.metric(label="ໂພແທດຊຽມ (K)", value=f"{potassium} mg/kg")
 
-st.write("---")
+st.sidebar.write("*(ຂໍ້ມູນຈະອັບເດດອັດຕະໂນມັດທຸກໆ 5 ວິນაທີ)*")
+st.sidebar.markdown("---")
 
-# ສະແດງຄ່າປັດຈຸບັນຢູ່ Sidebar ເພື່ອຄວາມງາມ
-st.sidebar.header("🔌 ເຊັນເຊີ IoT (Real-time)")
-st.sidebar.metric("ອຸນຫະພູມອາກາດ (t)", f"{t} °C")
-st.sidebar.metric("ความชื้นอากาศ (h)", f"{h} %")
-st.sidebar.metric("ຄ່າ pH ໃນດິນ", f"{pH}")
-st.sidebar.metric("ຄ່າ EC ໃນດິນ", f"{EC} mS/cm")
-st.sidebar.write("*(ຂໍ້ມູນຈະອັບເດດອັດຕະໂນມັດທຸກໆ 5 ວິນາທີ)*")
-
-# ຈັດຂໍ້ມູນໃສ່ DataFrame ເພື່ອທຳນາຍ
+# =========================================================
+# 🤖 ສ່ວນໜ້າຈໍຫຼັກ: ຈັດຂໍ້ມູນເຂົ້າ DataFrame ເພື່ອໃຫ້ AI ທຳນາຍ
+# =========================================================
 input_data = pd.DataFrame([{
     'temperature': temperature, 'EC': EC, 'pH': pH,
     'nitrogen': nitrogen, 'phosphorus': phosphorus, 'potassium': potassium,
@@ -151,13 +131,13 @@ pred_soil_hum = float(prediction[0][1])
 air_label, air_text, air_color = get_status_info(pred_pm25, "air")
 soil_label, soil_text, soil_color = get_status_info(pred_soil_hum, "soil")
 
-# ສະແດງຜົນການທຳນາຍໃນກ່ອງສີ
+# ສະແດງຜົນການທຳນາຍໃນກ່ອງສີ (Main Page)
 col_pred1, col_pred2 = st.columns(2)
 with col_pred1:
     st.subheader("🌤️ ຜົນວິເຄາະຄຸນນະພາບອາກາດ (AI)")
     st.markdown(f'<div style="background-color:{air_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{air_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄ່າ PM2.5: <b>{pred_pm25:.2f} µg/m³</b></p></div>', unsafe_allow_html=True)
 with col_pred2:
-    st.subheader("🌱 ຜົນວິເຄາະຄຸນນະພາບດິນ (AI)")
+    st.subheader("🌱 ຜົນວິകെາະຄຸນນະພາບດິນ (AI)")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # =========================================================
