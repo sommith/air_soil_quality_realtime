@@ -117,46 +117,38 @@ with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
-# =========================================================
-# 📈 [ແກ້ໄຂ] ສ່ວນສະແດງກຣາຟທຳນາຍ PM2.5 ແລະ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 7 ວັນ
-# =========================================================
-st.write("---")
-
-from datetime import timedelta  # 💡 ເພີ່ມການຄຳນວນໄລຍະເວລາວັນທີ
-
-future_days = []
-pm25_forecast = []
-soil_forecast = []
-
-# ຖານຂໍ້ມູນຈຳລອງ
-base_pm25 = float(pred_pm25) if float(pred_pm25) > 0 else 12.5
-base_soil = float(pred_soil_hum) if float(pred_soil_hum) > 0 else 45.0
-
-# 💡 ປ່ຽນ Loop ຈາກ 24 ຊົ່ວໂມງ ເປັນ 7 ວັນ (1 ເຖິງ 7)
-for day in range(1, 8):
-    # ຄຳນວນວັນທີຂ້າງໜ້າ (Format: ວັນ/ເດືອນ)
-    next_date = (now + timedelta(days=day)).strftime("%d/%m")
-    future_days.append(next_date)
-    
-    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ PM2.5 ສຳລັບ 7 ວັນ
-    fluctuation_pm25 = (day % 3) * 2.2 if day % 2 == 0 else -(day % 2) * 1.8
-    pm25_forecast.append(max(1.0, float(base_pm25 + fluctuation_pm25)))
-    
-    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ ຄວາມຊຸ່ມຊື່ນດິນ ສຳລັບ 7 ວັນ (ດິນຄ່ອຍໆແຫ້ງລົງໃນແຕ່ລະມື້)
-    fluctuation_soil = -(day * 1.5) + ((day % 3) * 2.0)
-    predicted_soil = max(1.0, min(100.0, float(base_soil + fluctuation_soil)))
-    soil_forecast.append(predicted_soil)
-
 # --- ແຕ້ມກຣາຟ PM2.5 ດ້ວຍ Plotly ---
 fig_pm25 = go.Figure()
-fig_pm25.add_trace(go.Scatter(x=future_days, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
+fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
+
+# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເພື່ອບັງຄັບຟອນຢູ່ຫົວຂໍ້ໂດຍກົງ
 fig_pm25.update_layout(
-    title=dict(text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 7 ວັນ", font=dict(family="Phetsarath", size=16)),
-    xaxis_title="ວັນທີ", 
+    title=dict(
+        text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h",
+        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+    ),
+    xaxis_title="ເວລາ", 
     yaxis_title="µg/m³", 
     height=350, 
     margin=dict(l=20, r=20, t=50, b=20),
-    font=dict(family="Phetsarath", size=13)
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
+)
+
+# --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
+fig_soil = go.Figure()
+fig_soil.add_trace(go.Scatter(x=future_hours, y=soil_forecast, mode='lines+markers', name='Soil Humidity', line=dict(color='#2ecc71', width=3)))
+
+# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເຊັ່ນດຽວກັນ
+fig_soil.update_layout(
+    title=dict(
+        text="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h",
+        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+    ),
+    xaxis_title="ເວລາ", 
+    yaxis_title="%", 
+    height=350, 
+    margin=dict(l=20, r=20, t=50, b=20),
+    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
 )
 
 # --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
