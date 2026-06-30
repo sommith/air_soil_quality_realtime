@@ -117,61 +117,65 @@ with col2:
     st.subheader("🌱 ຄຸນນະພາບດິນ")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
+# =========================================================
+# 📈 [ປ່ຽນກັບມາເປັນ 24 ຊົ່ວໂມງ] ກຣາຟທຳນາຍ PM2.5 ແລະ ຄວາມຊຸ່ມຊື່ນດິນ
+# =========================================================
+st.write("---")
+
+# 💡 1. ປ່ຽນຊື່ຕົວແປກັບມາເປັນ future_hours ແລະ ກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
+future_hours = [f"+{i}h" for i in range(1, 25)] 
+pm25_forecast = []
+soil_forecast = []
+
+# ຖານຂໍ້ມູນຈຳລອງ
+base_pm25 = float(pred_pm25) if float(pred_pm25) > 0 else 12.5
+base_soil = float(pred_soil_hum) if float(pred_soil_hum) > 0 else 45.0
+
+# 💡 2. ປ່ຽນ Loop ໃຫ້ກັບມາລັ່ນ 24 ຮອບ (1 ເຖິງ 24 ຊົ່ວໂມງ)
+for hour in range(1, 25):
+    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ PM2.5
+    fluctuation_pm25 = (hour % 4) * 1.5 if hour % 2 == 0 else -(hour % 3) * 1.2
+    pm25_forecast.append(max(1.0, float(base_pm25 + fluctuation_pm25)))
+    
+    # ຄຳນວນຄ່າຜັນຜວນຈຳລອງຂອງ ຄວາມຊຸ່ມຊື່ນດິນ
+    fluctuation_soil = -(hour * 0.2) + ((hour % 5) * 1.1)
+    soil_forecast.append(max(1.0, min(100.0, float(base_soil + fluctuation_soil))))
+
 # --- ແຕ້ມກຣາຟ PM2.5 ດ້ວຍ Plotly ---
 fig_pm25 = go.Figure()
+# 💡 ໃຊ້ x=future_hours ໄດ້ຢ່າງຖືກຕ້ອງແລ້ວ ເພາະເຮົາປະກາດໄວ້ດ້ານເທິງແລ້ວ
 fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
-
-# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເພື່ອບັງຄັບຟອນຢູ່ຫົວຂໍ້ໂດຍກົງ
 fig_pm25.update_layout(
     title=dict(
         text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h",
-        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+        font=dict(family="Phetsarath", size=16)
     ),
     xaxis_title="ເວລາ", 
     yaxis_title="µg/m³", 
     height=350, 
     margin=dict(l=20, r=20, t=50, b=20),
-    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
-)
-
-# --- ແຕ້ມກຣາຟ PM2.5 ດ້ວຍ Plotly ---
-fig_pm25 = go.Figure()
-fig_pm25.add_trace(go.Scatter(x=future_hours, y=pm25_forecast, mode='lines+markers', name='PM2.5', line=dict(color='#e74c3c', width=3)))
-
-# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເພື່ອບັງຄັບຟອນຢູ່ຫົວຂໍ້ໂດຍກົງ
-fig_pm25.update_layout(
-    title=dict(
-        text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h",
-        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
-    ),
-    xaxis_title="ເວລາ", 
-    yaxis_title="µg/m³", 
-    height=350, 
-    margin=dict(l=20, r=20, t=50, b=20),
-    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
+    font=dict(family="Phetsarath", size=13)
 )
 
 # --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ດ້ວຍ Plotly ---
 fig_soil = go.Figure()
 fig_soil.add_trace(go.Scatter(x=future_hours, y=soil_forecast, mode='lines+markers', name='Soil Humidity', line=dict(color='#2ecc71', width=3)))
-
-# 💡 ແກ້ໄຂ: ເພີ່ມ title=dict(...) ເຊັ່ນດຽວກັນ
 fig_soil.update_layout(
     title=dict(
         text="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h",
-        font=dict(family="Phetsarath", size=16) # 👈 ບັງຄັບຟອນຫົວຂໍ້ໃຫຍ່
+        font=dict(family="Phetsarath", size=16)
     ),
     xaxis_title="ເວລາ", 
     yaxis_title="%", 
     height=350, 
     margin=dict(l=20, r=20, t=50, b=20),
-    font=dict(family="Phetsarath", size=13) # 👈 ບັງຄັບຟອນແກນ ແລະ ຕົວເລກ
+    font=dict(family="Phetsarath", size=13)
 )
 
 # ແບ່ງໜ້າຈໍເປັນ 2 ຖັນສະແດງຜົນ
 graph_col1, graph_col2 = st.columns(2)
 
-# 💡 ກຳນົດ config={"displayModeBar": False} ເພື່ອຊ່ອນ Modebar ຕາມທີ່ທ່ານຕ້ອງການ
+# ສະແດງກຣາຟ ແລະ ປິດ Modebar ວົງມົນ
 with graph_col1:
     st.plotly_chart(fig_pm25, use_container_width=True, config={"displayModeBar": False})
 
@@ -183,7 +187,7 @@ with st.expander("📊 ເບິ່ງຕາຕະລາງຂໍ້ມູນກ
     forecast_df = pd.DataFrame({
         "PM2.5 (µg/m³)": pm25_forecast,
         "Soil Humidity (%)": soil_forecast
-    }, index=future_days)
+    }, index=future_hours)
     st.dataframe(forecast_df.T)
 
 # 💡 ລະບົບ Auto-Refresh ຢູ່ລຸ່ມສຸດ
