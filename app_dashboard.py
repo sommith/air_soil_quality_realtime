@@ -40,7 +40,7 @@ st.markdown("""
     
     /* 3. ບີບຂະໜາດຕົວໜັງສືຫົວຂໍ້ (Label) ຂອງ Metric ໃຫ້ນ້ອຍລົງ */
     [data-testid="stSidebar"] [data-testid="stMetricLabel"] {
-        font-size: 24px !important;
+        font-size: 14px !important;
     }
     </style>
     """, unsafe_allow_html=True)
