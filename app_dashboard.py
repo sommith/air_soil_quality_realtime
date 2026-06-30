@@ -64,22 +64,49 @@ def get_status_info(value, metric_type):
 FIREBASE_URL = "https://my-iot-project-5432f-default-rtdb.asia-southeast1.firebasedatabase.app/iot_data.json"
 
 try:
-    # ດຶງຂໍ້ມູນຈາກ Firebase
-    response = requests.get(FIREBASE_URL).json()
-    
-    # ແຍກຂໍ້ມູນອອກມາ (ຖ້າ Firebase ຍັງບໍ່ມີຂໍ້ມູນ ໃຫ້ໃຊ້ຄ່າ Default ແທນ)
-    t = response.get('t', 25.0)
-    h = response.get('h', 80.0)
-    pm1 = response.get('pm1', 11)
-    pm10 = response.get('pm10', 14)
-    temperature = response.get('temperature', 21.0)
-    EC = response.get('EC', 1.9)
-    pH = response.get('pH', 5.3)
-    nitrogen = response.get('nitrogen', 0.5)
-    phosphorus = response.get('phosphorus', 4.6)
-    potassium = response.get('potassium', 4.4)
-    phw = response.get('phw', 5.4)
-    tds = response.get('tds', 113.0)
+   # ==========================================
+# 📍 ເອົາສ່ວນນີ້ໄປວາງໄວ້ ຖັດລົງມາຈາກ block try-except ຂອງທ່ານ
+# ==========================================
+
+st.subheader("🔌 ຄ່າວັດແທກທັງໝົດຈາກອຸປະກອນ IoT (Real-time)")
+
+# 🌤️ ກຸ່ມທີ 1: ສະພາບອາກາດ (Air Environment)
+st.markdown("### 🌤️ ສະພາບອາກາດ")
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    st.metric(label="ອຸນຫະພູມ (t)", value=f"{t} °C")
+with col2:
+    st.metric(label="ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", value=f"{h} %")
+with col3:
+    st.metric(label="ຝຸ່ນ PM1", value=f"{pm1} µg/m³")
+with col4:
+    st.metric(label="ຝຸ່ນ PM10", value=f"{pm10} µg/m³")
+
+st.markdown("---")
+
+# 🧫 ກຸ່ມທີ 2: ຄຸນສົມບັດດິນ/ນ້ຳ (Soil & Water Properties)
+st.markdown("### 🪵 ຄຸນສົມບັດດິນ ແລະ ນ້ຳ")
+col5, col6, col7, col8 = st.columns(4)
+with col5:
+    st.metric(label="ຄ່າ pH ໃນດິນ", value=f"{pH}")
+with col6:
+    st.metric(label="ຄ່າ EC ໃນດິນ", value=f"{EC} mS/cm")
+with col7:
+    st.metric(label="ຄ່າ TDS (ສານລະລາຍ)", value=f"{tds} ppm")
+with col8:
+    st.metric(label="ຄ່າ pHw (ນ້ຳ)", value=f"{phw}")
+
+st.markdown("---")
+
+# 🧪 ກຸ່ມທີ 3: ສານອາຫານຫຼັກ 3 ຊະນິດ (NPK Fertilizers)
+st.markdown("### 🧪 ສານອາຫານຫຼັກໃນດິນ (NPK)")
+col9, col10, col11 = st.columns(3)
+with col9:
+    st.metric(label="ໄນໂຕຣເຈນ (N)", value=f"{nitrogen} mg/kg")
+with col10:
+    st.metric(label="ຟົດສະຟໍຣັດ (P)", value=f"{phosphorus} mg/kg")
+with col11:
+    st.metric(label="ໂພແທດຊຽມ (K)", value=f"{potassium} mg/kg")
 
 except Exception as e:
     st.error("ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບບອດ IoT ໄດ້, ກຳລັງໃຊ້ຄ່າຈຳລອງ...")
