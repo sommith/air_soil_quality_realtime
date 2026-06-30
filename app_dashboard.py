@@ -130,6 +130,7 @@ air_label, air_text, air_color = get_status_info(pred_pm25, "air")
 soil_label, soil_text, soil_color = get_status_info(pred_soil_hum, "soil")
 
 # ສະແດງຜົນການທຳນາຍໃນກ່ອງສີ (Main Page)
+st.markdown("<h2 style='text-align: center; color: #1E88E5; font-weight: bold; margin-bottom: 25px;'>📊 ຜົນການວິເຄາະຄຸນນະພາບອາກາດ ແລະ ດິນ (ເປັນຊົ່ວໂມງ)</h2>", unsafe_allow_html=True)
 st.header("ຜົນການວິເຄາະຄຸນນະພາບອາກາດ ແລະ ດິນ (ເປັນຊົ່ວໂມງ)")
 col_pred1, col_pred2 = st.columns(2)
 with col_pred1:
