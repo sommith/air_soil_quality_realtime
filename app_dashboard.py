@@ -33,8 +33,9 @@ st.markdown("""
     
     /* 2. 🎯 ບີບຂະໜາດຕົວເລກ Metric ໃຫ້ນ້ອຍລົງ ແລະ ພໍດີກັບ Sidebar */
     [data-testid="stSidebar"] [data-testid="stMetricValue"] {
-        font-size: 14px !important;  /* ປັບຂະໜາດຕົວເລກ (ຈາກເດີມ ~40px) */
-        
+        font-size: 24px !important;  /* ປັບຂະໜາດຕົວເລກ (ຈາກເດີມ ~40px) */
+        font-weight: bold;
+        font-family: 'Phetsarath OT+Time New Roman'        
     }
     
     /* 3. ບີບຂະໜາດຕົວໜັງສືຫົວຂໍ້ (Label) ຂອງ Metric ໃຫ້ນ້ອຍລົງ */
