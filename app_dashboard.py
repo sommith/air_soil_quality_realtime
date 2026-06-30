@@ -92,7 +92,7 @@ st.sidebar.metric("ອຸນຫະພູມອາກາດ (t)", f"{t} °C")
 st.sidebar.metric("ຄວາມຊຸ່ມຊື່ນອາກາດ (h)", f"{h} %")
 st.sidebar.metric("ຄ່າ pH ໃນດິນ", f"{pH}")
 st.sidebar.metric("ຄ່າ EC ໃນດິນ", f"{EC} mS/cm")
-st.sidebar.write("*(ຂໍ້ມູນຈະອັບເດດອັດຕະໂນມັດທຸກໆ 10 ວິນາທີ)*")
+st.sidebar.write("*(ຂໍ້ມູນຈະອັບເດດອັດຕະໂນມັດທຸກໆ 5 ວິນາທີ)*")
 
 # ຈັດຂໍ້ມູນໃສ່ DataFrame ເພື່ອທຳນາຍ
 input_data = pd.DataFrame([{
@@ -191,5 +191,5 @@ with st.expander("📊 ເບິ່ງຕາຕະລາງຂໍ້ມູນກ
     st.dataframe(forecast_df.T)
 
 # 💡 ລະບົບ Auto-Refresh ຢູ່ລຸ່ມສຸດ
-time.sleep(10)
+time.sleep(5)
 st.rerun()
