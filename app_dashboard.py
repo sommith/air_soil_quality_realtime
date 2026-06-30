@@ -28,7 +28,7 @@ st.markdown("""
     
     /* 1. ຕັ້ງ Font ພາສາລາວໃຫ້ທຸກສ່ວນ */
     h1, h2, h3, h4, h5, h6, p, label, .stMetric {
-        font-family: 'Phetsarath OT+Time New Roman', sans-serif !important;
+        font-family: 'Phetsarath OT', sans-serif !important;
     }
     
     /* 2. 🎯 ບີບຂະໜາດຕົວເລກ Metric ໃຫ້ນ້ອຍລົງ ແລະ ພໍດີກັບ Sidebar */
