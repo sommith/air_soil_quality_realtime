@@ -122,8 +122,8 @@ with col2:
 # =========================================================
 st.write("---")
 
-# 💡 1. ປ່ຽນຊື່ຕົວແປກັບມາເປັນ future_hours ແລະ ກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
-future_hours = [f"+{i}h" for i in range(1, 25)] 
+# 💡 1. ປ່ຽນຊື່ຕົວປ່ຽນກັບມາເປັນ future_hours ແລະ ກຽມຂໍ້ມູນ 24 ຊົ່ວໂມງ
+future_hours = [f"+{i}" for i in range(1, 25)] 
 pm25_forecast = []
 soil_forecast = []
 
