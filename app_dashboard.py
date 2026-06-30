@@ -30,8 +30,9 @@ st.markdown("""
         font-family: 'Phetsarath', sans-serif !important;
     }
     [data-testid="stSidebar"] [data-testid="stMetricValue"] {
-        font-size: 24px !important;  
+        font-size: 14px !important;  
         font-weight: bold;
+        font-family: 'Times New Roman';
     }
     [data-testid="stSidebar"] [data-testid="stMetricLabel"] {
         font-size: 14px !important;
