@@ -28,19 +28,19 @@ st.markdown("""
     
     /* 1. ຕັ້ງ Font ພາສາລາວໃຫ້ທຸກສ່ວນ */
     h1, h2, h3, h4, h5, h6, p, label, .stMetric {
-        font-family: 'Phetsarath', sans-serif !important;
+        font-family: 'Phetsarath OT+Time New Roman', sans-serif !important;
     }
     
     /* 2. 🎯 ບີບຂະໜາດຕົວເລກ Metric ໃຫ້ນ້ອຍລົງ ແລະ ພໍດີກັບ Sidebar */
     [data-testid="stSidebar"] [data-testid="stMetricValue"] {
         font-size: 24px !important;  /* ປັບຂະໜາດຕົວເລກ (ຈາກເດີມ ~40px) */
         font-weight: bold;
-        font-family: 'Phetsarath OT+Time New Roman'        
+            
     }
     
     /* 3. ບີບຂະໜາດຕົວໜັງສືຫົວຂໍ້ (Label) ຂອງ Metric ໃຫ້ນ້ອຍລົງ */
     [data-testid="stSidebar"] [data-testid="stMetricLabel"] {
-        font-size: 14px !important;
+        font-size: 24px !important;
     }
     </style>
     """, unsafe_allow_html=True)
