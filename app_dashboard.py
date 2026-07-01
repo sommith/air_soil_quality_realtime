@@ -164,6 +164,8 @@ fig_pm25.update_layout(
     title=dict(text="🔮 ຄາດຄະເນ PM2.5 ລ່ວງໜ້າ 24h", font=dict(family="Phetsarath", size=16)),
     xaxis_title="ເວລາ", yaxis_title="µg/m³", height=350, margin=dict(l=20, r=20, t=50, b=20),
     font=dict(family="Phetsarath", size=13)
+    xaxis=dict(fixedrange=True),
+    yaxis=dict(fixedrange=True)
 )
 
 # --- ແຕ້ມກຣາຟ ຄວາມຊຸ່ມຊື່ນດິນ ---
@@ -173,6 +175,8 @@ fig_soil.update_layout(
     title=dict(text="🔮 ຄາດຄະເນ ຄວາມຊຸ່ມຊື່ນດິນ ລ່ວງໜ້າ 24h", font=dict(family="Phetsarath", size=16)),
     xaxis_title="ເວລາ", yaxis_title="%", height=350, margin=dict(l=20, r=20, t=50, b=20),
     font=dict(family="Phetsarath", size=13)
+    xaxis=dict(fixedrange=True),
+    yaxis=dict(fixedrange=True)
 )
 
 graph_col1, graph_col2 = st.columns(2)
