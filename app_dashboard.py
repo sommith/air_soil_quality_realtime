@@ -133,10 +133,10 @@ soil_label, soil_text, soil_color = get_status_info(pred_soil_hum, "soil")
 # ສະແດງຜົນການທຳນາຍໃນກ່ອງສີ (Main Page)
 col_pred1, col_pred2 = st.columns(2)
 with col_pred1:
-    st.subheader("🌤️ ຜົນການວິເຄາະຄຸນນະພາບອາກາດ (AI)")
+    st.subheader("🌤️ ຜົນການວິເຄາະຄຸນນະພາບອາກາດ (AI-ຊົ່ວໂມງ)")
     st.markdown(f'<div style="background-color:{air_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{air_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄ່າ PM2.5: <b>{pred_pm25:.2f} µg/m³</b></p></div>', unsafe_allow_html=True)
 with col_pred2:
-    st.subheader("🌱 ຜົນການວິເຄາະຄຸນນະພາບດິນ (AI)")
+    st.subheader("🌱 ຜົນການວິເຄາະຄຸນນະພາບດິນ (AI-ຊົ່ວໂມງ)")
     st.markdown(f'<div style="background-color:{soil_color}; padding:20px; border-radius:10px; text-align:center;"><h2 style="color:white; margin:0;">{soil_text}</h2><p style="color:white; font-size:20px; margin:10px 0 0 0;">ຄວາມຊຸ່ມຊື່ນດິນ: <b>{pred_soil_hum:.2f} %</b></p></div>', unsafe_allow_html=True)
 
 # =========================================================
